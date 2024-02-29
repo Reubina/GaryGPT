@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "@capacitor/android": "^5.6.0",
+    "@huggingface/inference": "^2.6.4",
+    "http-server": "^0.12.3",
+    "https": "^1.0.0",
+    "javascript-obfuscator": "^4.1.0"
+  },
+  "devDependencies": {
+    "electron": "^28.1.4",
+    "electron-packager": "^17.1.2"
+  },
+  "name": "GaryGPT Gemini",
+  "version": "2.0.3",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "node build.js && electron .",
+    "packager": "node build.js && electron-packager . electron-quick-start",
+    "dev": "node build.js && http-server -p 80",
+    "ssl": "node build.js && http-server -p 443 --ssl",
+    "build": "node build.js"
+  }
+}

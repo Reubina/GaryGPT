@@ -1,0 +1,8 @@
+{
+  "appId": "com.gazza.gemini",
+  "appName": "GaryGPT Pro",
+  "webDir": "public",
+  "server": {
+    "androidScheme": "https"
+  }
+}
