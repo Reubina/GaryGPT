@@ -11,7 +11,7 @@
     "electron-packager": "^17.1.2"
   },
   "name": "GaryGPT Gemini",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {

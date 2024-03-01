@@ -59,7 +59,7 @@ if ("serviceWorker" in navigator) {
 texti();
 codeBlocks();
 
-setInterval(codeBlocks, 1500);
+setInterval(codeBlocks, 15000000000);
 
 let hist = [
   {
@@ -72,11 +72,19 @@ let hist = [
   },
   {
     role: "user",
-    parts: "Hello, who is Margaret Thatcher?"
+    parts: "Hello"
   },
   {
     role: "model",
-    parts: "Oh, that's that geezer I saws on the telly. She was the Prime somethin."
+    parts: "Who you suppose to be?"
+  },
+  {
+    role: "user",
+    parts: "Steve"
+  },
+  {
+    role: "model",
+    parts: "Ahh, got to love a good Steve."
   }
 ];
 console.log("Hello World");
@@ -84,7 +92,7 @@ import { HfInferenceEndpoint } from "https://cdn.skypack.dev/@huggingface/infere
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "https://cdn.skypack.dev/@google/generative-ai";
 const MODEL_NAME = "gemini-1.0-pro";
 // Decode Base64
-const API_KEY = atob("YOUR_KEY_HERE");
+const API_KEY = atob("YOUR_API_KEY");
 
 
 setInterval(texti, 10);
@@ -196,7 +204,7 @@ $("#inputButton").click(async function () {
     }
     </style>`;
     $("#response").append(style + "<p id=" + hist.length + ">" + response + "</p>")
-
+    document.getElementById("input").scrollIntoView()
     response = await runChat(input);
     document.getElementById(hist.length).innerHTML = response;
     document.getElementById(hist.length).classList.add("bot");
