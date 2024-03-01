@@ -11,7 +11,7 @@
     "electron-packager": "^17.1.2"
   },
   "name": "GaryGPT Gemini",
-  "version": "2.0.3",
+  "version": "3.0.5",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
@@ -19,6 +19,7 @@
     "packager": "node build.js && electron-packager . electron-quick-start",
     "dev": "node build.js && http-server -p 80",
     "ssl": "node build.js && http-server -p 443 --ssl",
-    "build": "node build.js"
+    "build": "node build.js",
+    "test": "electron ."
   }
 }

@@ -1,161 +1,179 @@
 <!DOCTYPE html>
 <html lang="en" style="scroll-behavior: smooth;">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="GaryGPT is a chatbot that can talk to you about anything." />
+    <meta name="description" content="GaryGPT is a chatbot that can talk to you about anything." />
     <meta name="theme-color" content="#1d3c76" />
     <title>GaryGPT</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="manifest" href="manifest.json" />
-    <link
-      rel="icon"
-      href="images/logo192.png"
-      type="image/png"
-      sizes="192x192" />
-    <script
-      src="https://raw.githubusercontent.com/cubiq/add-to-homescreen/master/src/addtohomescreen.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://raw.githubusercontent.com/cubiq/add-to-homescreen/master/style/addtohomescreen.css" />
+    <link rel="icon" href="images/logo192.png" type="image/png" sizes="192x192" />
+    <script src="https://raw.githubusercontent.com/cubiq/add-to-homescreen/master/src/addtohomescreen.js"></script>
+    <link rel="stylesheet"
+        href="https://raw.githubusercontent.com/cubiq/add-to-homescreen/master/style/addtohomescreen.css" />
     <style>
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: "Helvetica", sans-serif;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        flex-direction: column;
-        background: #000;
-        background-size: 400% 400%;
-        animation: moveBackground 60s linear infinite;
-        /* Adjust the duration as needed */
-      }
-
-      code {
-        color: green;
-      }
-
-      @keyframes moveBackground {
-        0% {
-          background-position: 0% 0%;
+        body{
+          padding: 0;
+          margin: 0;
+          background-color: #a63c3c;
         }
 
-        50% {
-          background-position: 100% 100%;
+        gbody {
+            margin: 0;
+            padding: 0;
+            font-family: "Helvetica", sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            /* Ensure body takes up at least the viewport height */
+            flex-direction: column;
+            /* Glassmorphism effect */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.0), rgba(0, 0, 0, 0.0)), url("images/1091508.jpg");
+            background-size: 200% 200%;
+            background-position: middle;
+            overflow-x: hidden;
+            /* Adjust the duration as needed */
         }
 
-        100% {
-          background-position: 0% 0%;
+
+        ::-webkit-scrollbar {
+            width: 1px;
         }
-      }
 
-      #topBar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.2);
-        color: white;
-        text-align: center;
-        padding: 10px;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        font-size: 24px;
-        z-index: 1000;
-        /* Ensure the navbar is on top of other elements */
-      }
+        code {
+            color: green;
+        }
 
-      pro {
+        @keyframes moveBackground {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            50% {
+                background-position: 100% 100%;
+            }
+
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        #topBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6));
+            text-align: center;
+            padding: 10px;
+            backdrop-filter: blur(10px);
+            font-size: 24px;
+            z-index: 1000;
+            /* Ensure the navbar is on top of other elements */
+        }
+
+        #topBar h1, sub {
+            color: #ffffff;
+        }
+
+        pro {
             background-image: linear-gradient(135deg, rgb(141, 112, 207), rgb(121, 178, 239));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-size: 0.7em;
+            vertical-align: super;
         }
 
-      #response {
-        margin: 20px;
-        margin-top: 140px;
-        margin-bottom: 120px;
-        /* Adjust margin-top to avoid overlapping with the fixed navbar */
-        background: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(10px);
-        padding: 20px;
-        border-radius: 15px;
-        width: 90%;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        font-size: 18px;
-        color: white;
-      }
+        #response {
+            margin: 20px;
+            margin-top: 140px;
+            margin-bottom: 120px;
+            /* Adjust margin-top to avoid overlapping with the fixed navbar */
+            background: rgba(0, 0, 0, 0.0);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            font-size: 18px;
+            color: white;
+        }
 
-      #input {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.2);
-        padding: 20px;
-        display: flex;
-        align-items: center;
-        box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
-        margin-left: 20px;
-        z-index: 2;
-      }
+        #input {
+            position: sticky;
+            bottom: 0;
+            top: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-      .message {
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 8px;
-        max-width: 90%;
-        /* Increase max-width for better mobile experience */
-      }
 
-      .user, .bot, .error {
-        color: white;
-        width: fit-content;
-        padding: 15px;
-        word-wrap: break-word;
-        hyphens: auto;
-        font-size: 0.9em;
-        text-align: left;
-        margin-bottom: 1em;
-      }
+        input:focus,
+        select:focus,
+        textarea:focus,
+        button:focus {
+            outline: none;
+        }
 
-      .user {
-        /* Message box on the right coloured in blue */
-        background-color: #0c84fe;
-        float: right;
-        margin-right: 0.35vw;
-        margin-left: 35vw;
-        border-radius: 1em 1em 0 1em;
-      }
 
-      .bot {
-        /* Message box on the left coloured in gray */
-        background-color: #26252a;
-        float: left;
-        margin-left: 0.35vw;
-        margin-right: 35vw;
-        border-radius: 1em 1em 1em 0;
-      }
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            max-width: 90%;
+            /* Increase max-width for better mobile experience */
+        }
 
-      .error {
-        /* Message box on the left coloured in gray */
-        background-color: #d40d0d;
-        float: left;
-        margin-left: 0.35vw;
-        margin-right: 35vw;
-        border-radius: 1em 1em 1em 0;
-      }
+        .user,
+        .bot,
+        .error {
+            color: white;
+            width: fit-content;
+            padding: 15px;
+            word-wrap: break-word;
+            hyphens: auto;
+            font-size: 0.9em;
+            text-align: left;
+            margin-bottom: 1em;
+        }
 
-      #inputText {
-        width: auto;
+        .user {
+            /* Message box on the right coloured in blue */
+            background-color: #0c84fe;
+            float: right;
+            margin-right: 0.35vw;
+            margin-left: 35vw;
+            border-radius: 1em 1em 0 1em;
+        }
+
+        .bot {
+            /* Message box on the left coloured in gray */
+            background-color: #2423296d;
+            float: left;
+            margin-left: 0.35vw;
+            margin-right: 35vw;
+            border-radius: 1em 1em 1em 0;
+        }
+
+        .error {
+            /* Message box on the left coloured in gray */
+            background-color: #d40d0d;
+            float: left;
+            margin-left: 0.35vw;
+            margin-right: 35vw;
+            border-radius: 1em 1em 1em 0;
+        }
+
+        #inputText {
+            width: auto;
+            color: #fff;
             font-size: 1em;
             padding: 1.2em;
             box-sizing: border-box;
@@ -165,148 +183,167 @@
             position: absolute;
             bottom: 1em;
             left: 1em;
-            right: 10em;
-      }
+            right: 1em;
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(60px);
+            padding-right: 4em;
+        }
 
-      ::placeholder {
-        color: rgb(200, 200, 200);
-      }
+        ::placeholder {
+            color: rgb(197, 197, 197);
+        }
 
-      #inputButton,
-      #clearButton {
-        width: 30%;
-        /* Adjust width for better mobile experience */
-        padding: 12px;
-        box-sizing: border-box;
-        border: none;
-        cursor: pointer;
-        bottom: 1em;
-        margin-bottom: 10px;
+        #inputButton{
+            width: 15%;
+            /* Adjust width for better mobile experience */
+            padding: 12px;
+            box-sizing: border-box;
+            border: none;
+            cursor: pointer;
+            bottom: 2.7em;
+            margin-bottom: 10px;
+            font-size: 9px;
+            transition: 0.3s ease;
+            position: absolute;
+            background-color: #0c84fe;
+            color: rgb(255, 255, 255);
+            border-radius: 30px;
+            padding: 10px;
+            width: max-content;
+            aspect-ratio: 1 / 1;
+            right: 3em;
+        }
 
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-        position: absolute;
-      }
+        #clearButton {
+            width: 20%;
+            /* Adjust width for better mobile experience */
+            padding: 11px;
+            box-sizing: border-box;
+            display: none;
+            cursor: pointer;
+            bottom: 1em;
+            margin-bottom: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: rgb(255, 255, 255);
+            margin-right: 5px;
+            margin-left: 5px;
+            border-radius: 30px;
+            right: 1em;
+            padding: 1.2em;
+            width: max-content;
+            aspect-ratio: 1 / 1;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            position: absolute;
+        }
 
-      #inputButton {
-        background-color: rgba(255, 255, 255, 1);
-        color: rgb(0, 0, 0);
-        border-radius: 30px;
-        padding: 17px;
-        width: max-content;
-        aspect-ratio: 1 / 1;
-        right: 6em;
-      }
+        #inputButton:hover {
+            background: linear-gradient(135deg, #af57d5, #4fc1e0);
+        }
 
-      #inputButton:hover {
-        background: linear-gradient(135deg, #af57d5cc, #4fc1e0cc);
-      }
+        #clearButton {
+        }
 
-      #clearButton {
-        background-color: rgba(255, 255, 255, 1);
-        color: rgb(0, 0, 0);
-        margin-right: 5px;
-        margin-left: 5px;
-        border-radius: 30px;
-        right: 2em;
-        padding: 5px;
-        padding: 20px;
-        width: max-content;
-        aspect-ratio: 1 / 1;
-      }
+        #clearButton:hover {
+            background-color: rgba(211, 47, 47, 0.8);
+        }
 
-      #clearButton:hover {
-        background-color: rgba(211, 47, 47, 0.8);
-      }
+        .topRight {
+            position: absolute;
+            right: 1.75em;
+            top: 1.75em;
+            padding: 10px;
+            border-radius: 0.5em;
+        }
 
-      .topRight {
-        position: absolute;
-        right: 1.75em;
-        top: 1.75em;
-        padding: 10px;
-        border-radius: 0.5em;
-      }
+        .makeImageBlack {
+            /* Actually, make the image white */
+            filter: contrast(0) brightness(0) invert(1);
+            width: 20px;
+            height: 20px;
+        }
 
-      .makeImageBlack {
-        filter: contrast(0) brightness(0);
-        width: 20px;
-        height: 20px;
-      }
+        #mic {
+            position: absolute;
+            right: 13em;
+            bottom: 2.5em;
+            z-index: 2;
+            width: 3em;
+            aspect-ratio: 1 / 1;
+            background: none;
+            border: none;
+        }
 
-      #mic {
-        position: absolute;
-        right: 13em;
-        bottom: 2.5em;
-        z-index: 2;
-        width: 3em;
-        aspect-ratio: 1 / 1;
-        background: none;
-        border: none;
-      }
+        code {
+            color: green;
+        }
 
-      code {
-        color: green;
-      }
+        .language-js {
+            color: #f7df1e;
+        }
 
-      .language-js {
-        color: #f7df1e;
-      }
-
-      sub {
-        font-size: 0.5em;
-        position: absolute;
-        top: 7.9em;
-      }
+        sub {
+            font-size: 0.56em;
+            position: absolute;
+            bottom: 1em;
+            right: 1em;
+        }
     </style>
-    <script
-      src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
 
-  <body>
+<body>
+  <gbody><a onclick="window.location.reload();">
     <div id="topBar">
-      <h1>GaryGPT <pro><img style="height: 0.8em; aspect-ratio: 1/1;" id="send" src="https://www.gstatic.com/lamda/images/bard_sparkle_v2_advanced.svg" alt="Send" /></pro></h1>
-      <sub>v2.0.3</sub>
-    </div>
+        <h1>GaryGPT <pro>v3</pro>
+        </h1>
+    </div></a>
     <div id="response"></div>
     <div id="input">
-      <input type="text" id="inputText" placeholder="Type your message here..." />
+        <input type="text" id="inputText" placeholder="Type your message here..." />
 
-      <button id="inputButton" title="Send">
-        <img class="makeImageBlack" id="send" src="https://www.gstatic.com/lamda/images/bard_sparkle_v2_advanced.svg" alt="Send" />
-      </button>
-      <button id="clearButton" title="Clear Chat">
-        <i class="fa fa-trash"></i>
-      </button>
+        <button id="inputButton" title="Send">
+            <img class="makeImageBlack" id="send"
+                src="https://www.gstatic.com/lamda/images/bard_sparkle_v2_advanced.svg" alt="Send" />
+        </button>
+        <button id="clearButton" title="Clear Chat">
+            <i class="fa fa-refresh"></i>
+        </button>
+        <sub>v3.0.5</sub>
     </div>
     <script>
-      var inputbox = document.getElementById("inputText");
+        var inputbox = document.getElementById("inputText");
 
-      inputbox.addEventListener("keyup", function (event) {
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          document.getElementById("inputButton").click();
-        }
-      });
+        inputbox.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("inputButton").click();
+            }
+        });
 
-      var clearButton = document.getElementById("clearButton");
-      clearButton.addEventListener("click", function (event) {
-        window.location.reload();
-      });
+        var clearButton = document.getElementById("clearButton");
+        clearButton.addEventListener("click", function (event) {
+            window.location.reload();
+        });
     </script>
     <script>
-      var sendButton = document.getElementById("inputButton");
-      sendButton.style.backgroundColor = "#333333";
-      function isLoaded() {
-        try {
-          document.getElementById("loaded").innerHTML = "";
-          sendButton.style.backgroundColor = "";
-        } catch (e) {
-          console.log("Not loaded yet");
+        var sendButton = document.getElementById("inputButton");
+        sendButton.style.backgroundColor = "#333333";
+        function isLoaded() {
+            try {
+                document.getElementById("loaded").innerHTML = "";
+                sendButton.style.backgroundColor = "";
+            } catch (e) {
+                console.log("Not loaded yet");
+            }
         }
-      }
 
-      setTimeout(isLoaded, 100);
+        setTimeout(isLoaded, 100);
     </script>
     <script type="module" src="html.js"></script>
-  </body>
+    </gbody>
+</body>
+
 </html>

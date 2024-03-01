@@ -84,7 +84,7 @@ import { HfInferenceEndpoint } from "https://cdn.skypack.dev/@huggingface/infere
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "https://cdn.skypack.dev/@google/generative-ai";
 const MODEL_NAME = "gemini-1.0-pro";
 // Decode Base64
-const API_KEY = atob("YOUR_API_KEY");
+const API_KEY = atob("YOUR_KEY_HERE");
 
 
 setInterval(texti, 10);
