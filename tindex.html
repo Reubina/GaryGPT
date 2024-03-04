@@ -5,19 +5,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="GaryGPT is a chatbot that can talk to you about anything." />
-    <meta name="theme-color" content="#1d3c76" />
+    <meta name="theme-color" content="#a63c3c" />
     <title>GaryGPT</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="manifest" href="manifest.json" />
-    <link rel="icon" href="images/trs.ico" type="image/x-icon" />
+    <link rel="icon" href="https://raw.githubusercontent.com/barxilly/GaryGPT/main/public/images/trs.ico"
+        type="image/x-icon" />
     <script src="https://raw.githubusercontent.com/cubiq/add-to-homescreen/master/src/addtohomescreen.js"></script>
     <link rel="stylesheet"
         href="https://raw.githubusercontent.com/cubiq/add-to-homescreen/master/style/addtohomescreen.css" />
     <style>
-        body{
-          padding: 0;
-          margin: 0;
-          background-color: #a63c3c;
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: #a63c3c;
         }
 
         gbody {
@@ -75,7 +76,8 @@
             /* Ensure the navbar is on top of other elements */
         }
 
-        #topBar h1, sub {
+        #topBar h1,
+        sub {
             color: #ffffff;
         }
 
@@ -157,6 +159,7 @@
         .bot {
             /* Message box on the left coloured in gray */
             background-color: #2423296d;
+            border: 1px solid #7e7e7e6d;
             float: left;
             margin-left: 0.35vw;
             margin-right: 35vw;
@@ -195,7 +198,7 @@
             color: rgb(197, 197, 197);
         }
 
-        #inputButton{
+        #inputButton {
             width: 15%;
             /* Adjust width for better mobile experience */
             padding: 12px;
@@ -240,12 +243,9 @@
             position: absolute;
         }
 
-        #inputButton:hover {
-            background: linear-gradient(135deg, #af57d5, #4fc1e0);
-        }
+        
 
-        #clearButton {
-        }
+        #clearButton {}
 
         #clearButton:hover {
             background-color: rgba(211, 47, 47, 0.8);
@@ -296,54 +296,55 @@
 </head>
 
 <body>
-  <gbody><a onclick="window.location.reload();">
-    <div id="topBar">
-        <h1>GaryGPT <pro>v3</pro>
-        </h1>
-    </div></a>
-    <div id="response"></div>
-    <div id="input">
-        <input type="text" id="inputText" placeholder="Type your message here..." />
+    <gbody><a onclick="window.location.reload();">
+            <div id="topBar">
+                <h1>GaryGPT <pro>v3</pro>
+                </h1>
+            </div>
+        </a>
+        <div id="response"></div>
+        <div id="input">
+            <input type="text" id="inputText" placeholder="Type your message here..." />
 
-        <button id="inputButton" title="Send">
-            <img class="makeImageBlack" id="send"
-                src="https://www.gstatic.com/lamda/images/bard_sparkle_v2_advanced.svg" alt="Send" />
-        </button>
-        <button id="clearButton" title="Clear Chat">
-            <i class="fa fa-refresh"></i>
-        </button>
-        <sub>v3.0.7</sub>
-    </div>
-    <script>
-        var inputbox = document.getElementById("inputText");
+            <button id="inputButton" title="Send">
+                <img class="makeImageBlack" id="send"
+                    src="https://www.gstatic.com/lamda/images/bard_sparkle_v2_advanced.svg" alt="Send" />
+            </button>
+            <button id="clearButton" title="Clear Chat">
+                <i class="fa fa-refresh"></i>
+            </button>
+            <sub>v3.1.0</sub>
+        </div>
+        <script>
+            var inputbox = document.getElementById("inputText");
 
-        inputbox.addEventListener("keyup", function (event) {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                document.getElementById("inputButton").click();
+            inputbox.addEventListener("keyup", function (event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    document.getElementById("inputButton").click();
+                }
+            });
+
+            var clearButton = document.getElementById("clearButton");
+            clearButton.addEventListener("click", function (event) {
+                window.location.reload();
+            });
+        </script>
+        <script>
+            var sendButton = document.getElementById("inputButton");
+            sendButton.style.backgroundColor = "#333333";
+            function isLoaded() {
+                try {
+                    document.getElementById("loaded").innerHTML = "";
+                    sendButton.style.backgroundColor = "";
+                } catch (e) {
+                    console.log("Not loaded yet");
+                }
             }
-        });
 
-        var clearButton = document.getElementById("clearButton");
-        clearButton.addEventListener("click", function (event) {
-            window.location.reload();
-        });
-    </script>
-    <script>
-        var sendButton = document.getElementById("inputButton");
-        sendButton.style.backgroundColor = "#333333";
-        function isLoaded() {
-            try {
-                document.getElementById("loaded").innerHTML = "";
-                sendButton.style.backgroundColor = "";
-            } catch (e) {
-                console.log("Not loaded yet");
-            }
-        }
-
-        setTimeout(isLoaded, 100);
-    </script>
-    <script type="module" src="html.js"></script>
+            setTimeout(isLoaded, 100);
+        </script>
+        <script type="module" src="html.js"></script>
     </gbody>
 </body>
 

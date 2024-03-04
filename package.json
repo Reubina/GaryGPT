@@ -14,7 +14,7 @@
     "electron-wix-msi": "^5.0.0"
   },
   "name": "GaryGPT Gemini",
-  "version": "3.0.7",
+  "version": "3.1.0",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {

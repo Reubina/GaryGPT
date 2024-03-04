@@ -5,7 +5,7 @@ GaryGPT is a simple chatbot that uses the Gemini Pro 1.0 model to generate respo
 ### Requirements
 - Node.js 20.0.0 or later
 - Windows 11, macOS Big Sur, or Ubuntu 20.04 or later
-- Python 3.8 or later
+- Python 3.10 or later
 ### Instructions
 1. Clone the repository
 ```bash

@@ -1,5 +1,8 @@
-
-
+/**
+   * @type {HTMLInputElement}
+   * 
+   * Check if the input text is empty
+   */
 function texti() {
   if (document.getElementById("response").innerHTML == "") {
     document.getElementById("response").style.display = "none";
@@ -12,8 +15,12 @@ function texti() {
 $("#inputButton").prop("disabled", true);
 $("#inputText").style = "background-color: grey;";
 
-// If user location is not US, show error message and disable the input button
-function getIP() {
+/**
+   * Get the IP address of the user.
+   * 
+   * Returns the IP address of the user as a string.
+   */
+async function getIP() {
   return fetch('https://api64.ipify.org?format=json')
     .then(result => result.json())
     .then(data => data.ip)
@@ -35,15 +42,21 @@ getIP().then(ip => {
         document.getElementById("inputButton").style = "";
         $("#temp").remove();
         document.body.appendChild(document.createElement("span")).id = "loaded";
+        document.head.appendChild(document.createElement("style")).innerHTML = `#inputButton:hover {
+          background: linear-gradient(135deg, #af57d5, #4fc1e0);
+      }`;
       }
     })
     .catch(err => {
       console.error(err);
-      $("#response").append("<p class='error'>Error: " + err + "</p>");
+      $("#response").append("<p class='error'>Error in IP function: " + err + "</p>");
     });
 });
 
-function codeBlocks() {
+/**
+ * This is needed as to not break the code; Deal with it.
+ */
+function eeeee() {
 }
 
 if ("serviceWorker" in navigator) {
@@ -59,7 +72,7 @@ if ("serviceWorker" in navigator) {
 texti();
 
 // Hack AF
-setInterval(codeBlocks, 9999999999999999000000000);
+setInterval(eeeee, 9999999999999999000000000n);
 
 let hist = [
   {
@@ -72,7 +85,7 @@ let hist = [
   },
   {
     role: "user",
-    parts: "Hello"
+    parts: "Sup Gazza?"
   },
   {
     role: "model",
@@ -92,19 +105,27 @@ import { HfInferenceEndpoint } from "https://cdn.skypack.dev/@huggingface/infere
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "https://cdn.skypack.dev/@google/generative-ai";
 const MODEL_NAME = "gemini-1.0-pro";
 // Decode Base64
-const API_KEY = atob("YOUR_API_HERE");
+const API_KEY = atob("API_KEY_HERE");
 
 
 setInterval(texti, 10);
 
+
+/**
+ * Sends chat data to Gemini API.
+ * 
+ * The `into` should be any string.
+ * 
+ * Global var `hist` is also required for proper usage.
+ */
 async function runChat(into) {
   const genAI = new GoogleGenerativeAI(API_KEY);
   const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
   const generationConfig = {
-    temperature: 0.9,
-    topK: 1,
-    topP: 1,
+    temperature: 1,
+    topK: 12,
+    topP: 0.7,
     maxOutputTokens: 2048,
   };
 
@@ -140,28 +161,39 @@ async function runChat(into) {
 }
 
 console.log("Hello World");
-$("#inputButton").click(async function () {
-  var send = document.getElementsByTagName("img");
-  var input = $("#inputText").val();
-  if (input == "") {
-    return;
-  }
-  $("#inputText").val("");
-  for (var i = 0; i < send.length; i++) {
-    send[i].src = "https://www.gstatic.com/lamda/images/bard_sparkle_processing_v2_advanced.gif";
-  }
-  $("#response").append("<p class='user'>" + input + "</p>")
-  console.log(hist)
 
-  try {
-    var response = `<div id="ind" class="ticontainer bot">
+$("#inputButton").click(
+  /**
+   * Sends text from the input to the Gemini API and appends the response to the chat
+   */
+  async function () {
+    // Get the send button and the input text
+    var send = document.getElementsByTagName("img");
+    var input = $("#inputText").val();
+    if (input == "") {
+      return;
+    }
+    // Set the image to the loading gif
+    $("#inputText").val("");
+    for (var i = 0; i < send.length; i++) {
+      send[i].src = "https://www.gstatic.com/lamda/images/bard_sparkle_processing_v2_advanced.gif";
+    }
+    // Append the user's input to the chat history
+    $("#response").append("<p class='user'>" + input + "</p>")
+    console.log(hist)
+
+    try {
+      // Set the response to a text typing animation
+      var response = `<div id="ind" class="ticontainer bot">
     <div class="tiblock">
       <div class="tidot"></div>
       <div class="tidot"></div>
       <div class="tidot"></div>
     </div>
   </div>`;
-    var style = `<style>
+
+      // Define the style for the typing animation
+      var style = `<style>
     .tiblock {
         align-items: center;
         display: flex;
@@ -203,35 +235,41 @@ $("#inputButton").click(async function () {
     -webkit-animation-delay:400ms;
     }
     </style>`;
-    $("#response").append(style + "<p id=" + hist.length + ">" + response + "</p>")
-    document.getElementById("input").scrollIntoView()
-    response = await runChat(input);
-    document.getElementById(hist.length).innerHTML = response;
-    document.getElementById(hist.length).classList.add("bot");
-    document.getElementById("ind").remove();
 
-    hist.push({ role: 'user', parts: input });
-    hist.push({ role: 'model', parts: response });
-    // Scroll to the bottom of the chat
-    document.getElementById(hist.length - 2).scrollIntoView();
-  } catch (e) {
-    if (e.message.match(/User location is not supported for the API use./)) {
-      var err = "Google Gemini only supports US locations. Please use a VPN to access the service.";
-      $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
-      console.error(e);
-    } else if (e.message.match(/The model is overloaded./)) {
-      var err = "The model is overloaded. Please try again later.";
-      $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
-      console.error(e);
-    } else if (e.message.match(/Failed to fetch at makeRequest/)) {
-      var response = `<div id="ind" class="ticontainer bot">
+      // Append the response to the chat
+      $("#response").append(style + "<p id=" + hist.length + ">" + response + "</p>")
+      document.getElementById("input").scrollIntoView()
+      response = await runChat(input);
+      document.getElementById(hist.length).innerHTML = response;
+      document.getElementById(hist.length).classList.add("bot");
+      document.getElementById("ind").remove();
+
+      // Append the response to the chat history
+      hist.push({ role: 'user', parts: input });
+      hist.push({ role: 'model', parts: response });
+      // Scroll to the bottom of the chat
+      document.getElementById(hist.length - 2).scrollIntoView();
+    } catch (e) {
+      /**
+       * Catch any errors and send them to the chat
+       */
+      if (e.message.match(/User location is not supported for the API use./)) {
+        var err = "Google Gemini only supports US locations. Please use a VPN to access the service.";
+        $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
+        console.error(e);
+      } else if (e.message.match(/The model is overloaded./)) {
+        var err = "The model is overloaded. Please try again later.";
+        $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
+        console.error(e);
+      } else if (e.message.match(/Failed to fetch at makeRequest/)) {
+        var response = `<div id="ind" class="ticontainer bot">
       <div class="tiblock">
         <div class="tidot"></div>
         <div class="tidot"></div>
         <div class="tidot"></div>
       </div>
     </div>`;
-      var style = `<style>
+        var style = `<style>
       .tiblock {
           align-items: center;
           display: flex;
@@ -273,29 +311,29 @@ $("#inputButton").click(async function () {
       -webkit-animation-delay:400ms;
       }
       </style>`;
-      $("#response").append(style + "<p id=" + hist.length + ">" + response + "</p>")
-      document.getElementById("input").scrollIntoView()
-      response = await runChat(input);
-      document.getElementById(hist.length).innerHTML = response;
-      document.getElementById(hist.length).classList.add("bot");
-      document.getElementById("ind").remove();
+        $("#response").append(style + "<p id=" + hist.length + ">" + response + "</p>")
+        document.getElementById("input").scrollIntoView()
+        response = await runChat(input);
+        document.getElementById(hist.length).innerHTML = response;
+        document.getElementById(hist.length).classList.add("bot");
+        document.getElementById("ind").remove();
 
-      hist.push({ role: 'user', parts: input });
-      hist.push({ role: 'model', parts: response });
-      // Scroll to the bottom of the chat
-      document.getElementById(hist.length - 2).scrollIntoView();
-    } else {
-      var err = e;
-      $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
-      console.error(e);
+        hist.push({ role: 'user', parts: input });
+        hist.push({ role: 'model', parts: response });
+        // Scroll to the bottom of the chat
+        document.getElementById(hist.length - 2).scrollIntoView();
+      } else {
+        var err = e;
+        $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
+        console.error(e);
+      }
+
     }
 
-  }
-
-  for (var i = 0; i < send.length; i++) {
-    send[i].src = "https://www.gstatic.com/lamda/images/bard_sparkle_v2_advanced.svg";
-  }
-});
+    for (var i = 0; i < send.length; i++) {
+      send[i].src = "https://www.gstatic.com/lamda/images/bard_sparkle_v2_advanced.svg";
+    }
+  });
 
 $("#mic").click(function () {
   var mic = document.getElementById("mic");
