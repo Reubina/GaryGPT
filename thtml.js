@@ -57,9 +57,9 @@ if ("serviceWorker" in navigator) {
 }
 
 texti();
-codeBlocks();
 
-setInterval(codeBlocks, 15000000000);
+// Hack AF
+setInterval(codeBlocks, 9999999999999999000000000);
 
 let hist = [
   {
@@ -84,7 +84,7 @@ let hist = [
   },
   {
     role: "model",
-    parts: "Ahh, got to love a good Steve."
+    parts: "Ahh, I know this other bloke called Steve Marsh. He's a bit of a twat."
   }
 ];
 console.log("Hello World");
@@ -92,7 +92,7 @@ import { HfInferenceEndpoint } from "https://cdn.skypack.dev/@huggingface/infere
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "https://cdn.skypack.dev/@google/generative-ai";
 const MODEL_NAME = "gemini-1.0-pro";
 // Decode Base64
-const API_KEY = atob("YOUR_API_KEY");
+const API_KEY = atob("YOUR_API_HERE");
 
 
 setInterval(texti, 10);
@@ -217,13 +217,79 @@ $("#inputButton").click(async function () {
   } catch (e) {
     if (e.message.match(/User location is not supported for the API use./)) {
       var err = "Google Gemini only supports US locations. Please use a VPN to access the service.";
+      $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
+      console.error(e);
     } else if (e.message.match(/The model is overloaded./)) {
       var err = "The model is overloaded. Please try again later.";
+      $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
+      console.error(e);
+    } else if (e.message.match(/Failed to fetch at makeRequest/)) {
+      var response = `<div id="ind" class="ticontainer bot">
+      <div class="tiblock">
+        <div class="tidot"></div>
+        <div class="tidot"></div>
+        <div class="tidot"></div>
+      </div>
+    </div>`;
+      var style = `<style>
+      .tiblock {
+          align-items: center;
+          display: flex;
+          height: 17px;
+      }
+      
+      .ticontainer .tidot {
+          background-color: #90949c;
+      }
+      
+      .tidot {
+          -webkit-animation: mercuryTypingAnimation 1.5s infinite ease-in-out;
+          border-radius: 2px;
+          display: inline-block;
+          height: 4px;
+          margin-right: 2px;
+          width: 4px;
+      }
+      
+      @-webkit-keyframes mercuryTypingAnimation{
+      0%{
+        -webkit-transform:translateY(0px)
+      }
+      28%{
+        -webkit-transform:translateY(-5px)
+      }
+      44%{
+        -webkit-transform:translateY(0px)
+      }
+      }
+      
+      .tidot:nth-child(1){
+      -webkit-animation-delay:200ms;
+      }
+      .tidot:nth-child(2){
+      -webkit-animation-delay:300ms;
+      }
+      .tidot:nth-child(3){
+      -webkit-animation-delay:400ms;
+      }
+      </style>`;
+      $("#response").append(style + "<p id=" + hist.length + ">" + response + "</p>")
+      document.getElementById("input").scrollIntoView()
+      response = await runChat(input);
+      document.getElementById(hist.length).innerHTML = response;
+      document.getElementById(hist.length).classList.add("bot");
+      document.getElementById("ind").remove();
+
+      hist.push({ role: 'user', parts: input });
+      hist.push({ role: 'model', parts: response });
+      // Scroll to the bottom of the chat
+      document.getElementById(hist.length - 2).scrollIntoView();
     } else {
       var err = e;
+      $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
+      console.error(e);
     }
-    $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
-    console.error(e);
+
   }
 
   for (var i = 0; i < send.length; i++) {

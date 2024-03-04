@@ -2,6 +2,7 @@
   "dependencies": {
     "@capacitor/android": "^5.6.0",
     "@huggingface/inference": "^2.6.4",
+    "exe-icon-extractor": "^1.0.8",
     "http-server": "^0.12.3",
     "https": "^1.0.0",
     "javascript-obfuscator": "^4.1.0"
@@ -9,10 +10,11 @@
   "devDependencies": {
     "electron": "^28.1.4",
     "electron-packager": "^17.1.2",
+    "electron-winstaller": "^5.2.2",
     "electron-wix-msi": "^5.0.0"
   },
   "name": "GaryGPT Gemini",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
@@ -20,6 +22,8 @@
     "packager": "node build.js && electron-packager . electron-quick-start",
     "dev": "node build.js && http-server -p 80",
     "ssl": "node build.js && http-server -p 443 --ssl",
+    "pack": "node build.js && electron-packager . --asar --overwrite --platform=win32 --arch=x64 --icon=public/images/trs.ico --prune=true --out=release-builds && node createmsi.js",
+    "msi": "node createmsi.js",
     "build": "node build.js",
     "test": "electron ."
   }

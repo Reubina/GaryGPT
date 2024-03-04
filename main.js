@@ -20,7 +20,7 @@ function createMainWindow() {
       // Allow remote module in the main window
       enableRemoteModule: true
     },
-    icon: "android\\app\\src\\main\\ic_launcher-playstore - Copy.png"
+    icon: "public/images/trs.ico"
   })
 
   // Load the index.html of the app
