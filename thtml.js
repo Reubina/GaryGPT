@@ -2,7 +2,7 @@
    * @type {HTMLInputElement}
    * 
    * Check if the input text is empty
-   */
+*/
 function texti() {
   if (document.getElementById("response").innerHTML == "") {
     document.getElementById("response").style.display = "none";
@@ -72,7 +72,7 @@ if ("serviceWorker" in navigator) {
 texti();
 
 // Hack AF
-setInterval(eeeee, 9999999999999999000000000n);
+setInterval(eeeee, 999999999);
 
 let hist = [
   {
@@ -162,9 +162,10 @@ async function runChat(into) {
 
 console.log("Hello World");
 
+
 $("#inputButton").click(
   /**
-   * Sends text from the input to the Gemini API and appends the response to the chat
+   * Sends text from the input to the Gemini API and appends the response to the chat.
    */
   async function () {
     // Get the send button and the input text
@@ -240,6 +241,11 @@ $("#inputButton").click(
       $("#response").append(style + "<p id=" + hist.length + ">" + response + "</p>")
       document.getElementById("input").scrollIntoView()
       response = await runChat(input);
+      $("#" + hist.length).click(function () {
+        var text = $(this).text();
+        navigator.clipboard.writeText(text);
+        alert("Copied to clipboard: " + text);
+      });
       document.getElementById(hist.length).innerHTML = response;
       document.getElementById(hist.length).classList.add("bot");
       document.getElementById("ind").remove();
@@ -335,7 +341,11 @@ $("#inputButton").click(
     }
   });
 
-$("#mic").click(function () {
+$("#mic").click(
+  /**
+   * Starts the microphone and sends the audio to the Gemini API. DEPRECATED.
+   */
+  function () {
   var mic = document.getElementById("mic");
 
   if (mic.src == "https://www.gstatic.com/lamda/images/mic.svg") {
