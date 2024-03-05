@@ -17,7 +17,7 @@ npm i
 ```
 3. Replace YOUR_API_KEY with your Gemini API key encrypted in Base64 in the thtml.js file
 ```javascript
-const API_KEY = atob('YOUR_API_KEY');
+const API_KEY = atob('API_KEY_HERE');
 ```
 4. Run the bot
 ```bash
