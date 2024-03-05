@@ -1,6 +1,6 @@
 # GaryGPT
 ## A simple Gemini-based general-purpose chatbot
-GaryGPT is a simple chatbot that uses the Gemini Pro 1.0 model to generate responses to user input. It is designed to be easy to use and easy to modify. GaryGPT is written in Python and uses the non-public Google Gemini API. GaryGPT is a work in progress and is not yet ready for production use. It is intended for educational and experimental purposes only.
+GaryGPT is a simple chatbot that uses the Gemini Pro 1.0 model to generate responses to user input. It is designed to be easy to use and easy to modify. GaryGPT is written in HTML/JS and uses the non-public Google Gemini API. GaryGPT is a work in progress and is not yet ready for production use. It is intended for educational and experimental purposes only.
 ## Installation
 ### Requirements
 - Node.js 20.0.0 or later
