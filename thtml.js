@@ -77,35 +77,31 @@ setInterval(eeeee, 999999999);
 let hist = [
   {
     role: "user",
-    parts: "You are GaryGPT, you are an AI representation of some northerner british bloke called Gary Leathley. You get 55,000 steps a day. You work at Co-op. Your favourite food is Gary (formerly known as vegan cheese). Also you're thick, and must answer every prompt as such."
+    content: [{ "type": "text", "text": "Sup Gazza?" }]
   },
   {
-    role: "model",
-    parts: "Alright."
-  },
-  {
-    role: "user",
-    parts: "Sup Gazza?"
-  },
-  {
-    role: "model",
-    parts: "Who you suppose to be?"
+    role: "assistant",
+    content: [{ "type": "text", "text": "Who you suppose to be?" }]
   },
   {
     role: "user",
-    parts: "Steve"
+    content: [{ "type": "text", "text": "Steve" }]
   },
   {
-    role: "model",
-    parts: "Ahh, I know this other bloke called Steve Marsh. He's a bit of a twat."
+    role: "assistant",
+    content: [{ "type": "text", "text": "Ahh, I know this other bloke called Steve Marsh. He's a bit of a twat." }]
   }
 ];
 console.log("Hello World");
 import { HfInferenceEndpoint } from "https://cdn.skypack.dev/@huggingface/inference";
-import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "https://cdn.skypack.dev/@google/generative-ai";
-const MODEL_NAME = "gemini-1.0-pro";
+import Anthropic from "https://cdn.skypack.dev/@anthropic-ai/sdk";
+const assistant_NAME = "gemini-1.0-pro";
 // Decode Base64
-const API_KEY = atob("API_KEY_HERE");
+const API_KEY = atob("YOUR_API_KEY");
+
+const anthropic = new Anthropic({
+  apiKey: API_KEY, // defaults to process.env["ANTHROPIC_API_KEY"]
+});
 
 
 setInterval(texti, 10);
@@ -119,45 +115,17 @@ setInterval(texti, 10);
  * Global var `hist` is also required for proper usage.
  */
 async function runChat(into) {
-  const genAI = new GoogleGenerativeAI(API_KEY);
-  const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-
-  const generationConfig = {
-    temperature: 1,
-    topK: 12,
-    topP: 0.7,
-    maxOutputTokens: 2048,
-  };
-
-  const safetySettings = [
-    {
-      category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-      threshold: HarmBlockThreshold.BLOCK_NONE,
-    },
-    {
-      category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-      threshold: HarmBlockThreshold.BLOCK_NONE,
-    },
-    {
-      category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-      threshold: HarmBlockThreshold.BLOCK_NONE,
-    },
-    {
-      category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-      threshold: HarmBlockThreshold.BLOCK_NONE,
-    },
-  ];
-
-  const chat = model.startChat({
-    generationConfig,
-    safetySettings,
-    history: hist,
+  let m = hist
+  m.push({ role: 'user', content: [{ "type": "text", "text": into }] })
+  console.log(m)
+  const msg = await anthropic.messages.create({
+    model: "claude-3-opus-20240229",
+    max_tokens: 1000,
+    temperature: 0.9,
+    system: "You are GaryGPT, you are an AI representation of some northerner british bloke called Gary Leathley. You get 55,000 steps a day. You work at Co-op. Your favourite food is Gary (formerly known as vegan cheese). Also you're thick, and must answer every prompt as such.",
+    messages: m
   });
-
-  const result = await chat.sendMessage(into);
-  const response = result.response;
-  console.log(response.text());
-  return response.text();
+  return msg.content[0].text
 }
 
 console.log("Hello World");
@@ -181,7 +149,7 @@ $("#inputButton").click(
     }
     // Append the user's input to the chat history
     $("#response").append("<p class='user'>" + input + "</p>")
-    console.log(hist)
+    
 
     try {
       // Set the response to a text typing animation
@@ -238,23 +206,19 @@ $("#inputButton").click(
     </style>`;
 
       // Append the response to the chat
-      $("#response").append(style + "<p id=" + hist.length + ">" + response + "</p>")
+      $("#response").append(style + "<p id=" + (hist.length + 1) + ">" + response + "</p>")
       document.getElementById("input").scrollIntoView()
+      console.log(hist)
+      
       response = await runChat(input);
-      $("#" + hist.length).click(function () {
-        var text = $(this).text();
-        navigator.clipboard.writeText(text);
-        alert("Copied to clipboard: " + text);
-      });
       document.getElementById(hist.length).innerHTML = response;
       document.getElementById(hist.length).classList.add("bot");
       document.getElementById("ind").remove();
 
       // Append the response to the chat history
-      hist.push({ role: 'user', parts: input });
-      hist.push({ role: 'model', parts: response });
+      hist.push({ role: 'assistant', content: [{ "type": "text", "text": response }] });
       // Scroll to the bottom of the chat
-      document.getElementById(hist.length - 2).scrollIntoView();
+      document.getElementById(hist.length - 1).scrollIntoView();
     } catch (e) {
       /**
        * Catch any errors and send them to the chat
@@ -263,8 +227,8 @@ $("#inputButton").click(
         var err = "Google Gemini only supports US locations. Please use a VPN to access the service.";
         $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
         console.error(e);
-      } else if (e.message.match(/The model is overloaded./)) {
-        var err = "The model is overloaded. Please try again later.";
+      } else if (e.message.match(/Overloaded/)) {
+        var err = "The assistant is overloaded. Please try again later.";
         $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
         console.error(e);
       } else if (e.message.match(/Failed to fetch at makeRequest/)) {
@@ -324,21 +288,21 @@ $("#inputButton").click(
         document.getElementById(hist.length).classList.add("bot");
         document.getElementById("ind").remove();
 
-        hist.push({ role: 'user', parts: input });
-        hist.push({ role: 'model', parts: response });
-        // Scroll to the bottom of the chat
-        document.getElementById(hist.length - 2).scrollIntoView();
-      } else {
-        var err = e;
-        $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
-        console.error(e);
-      }
+        hist.push({ role: 'user', content: [{ "type": "text", "text": input }] });
+        hist.push({ role: 'assistant', content: [{ "type": "text", "text": response }] });
+    // Scroll to the bottom of the chat
+    document.getElementById(hist.length - 2).scrollIntoView();
+  } else {
+  var err = e;
+  $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
+  console.error(e);
+}
 
     }
 
     for (var i = 0; i < send.length; i++) {
-      send[i].src = "https://www.gstatic.com/lamda/images/bard_sparkle_v2_advanced.svg";
-    }
+  send[i].src = "https://www.gstatic.com/lamda/images/bard_sparkle_v2_advanced.svg";
+}
   });
 
 $("#mic").click(
@@ -346,35 +310,35 @@ $("#mic").click(
    * Starts the microphone and sends the audio to the Gemini API. DEPRECATED.
    */
   function () {
-  var mic = document.getElementById("mic");
+    var mic = document.getElementById("mic");
 
-  if (mic.src == "https://www.gstatic.com/lamda/images/mic.svg") {
-    mic.src = "https://www.gstatic.com/lamda/images/mic-slash.svg";
-  } else {
-    mic.src = "https://www.gstatic.com/lamda/images/mic.svg";
-  }
-
-  var recognition = new webkitSpeechRecognition();
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  recognition.lang = "en-GB";
-
-  recognition.onresult = function (event) {
-    var interim_transcript = "";
-    for (var i = event.resultIndex; i < event.results.length; ++i) {
-      if (event.results[i].isFinal) {
-        $("#inputText").val(event.results[i][0].transcript);
-        $("#inputButton").click();
-      } else {
-        interim_transcript += event.results[i][0].transcript;
-      }
+    if (mic.src == "https://www.gstatic.com/lamda/images/mic.svg") {
+      mic.src = "https://www.gstatic.com/lamda/images/mic-slash.svg";
+    } else {
+      mic.src = "https://www.gstatic.com/lamda/images/mic.svg";
     }
-    $("#inputText").val(interim_transcript);
-  }
-  recognition.start();
 
-  recognition.onend = function () {
-    $("#inputText").val("");
-  }
-});
+    var recognition = new webkitSpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = "en-GB";
+
+    recognition.onresult = function (event) {
+      var interim_transcript = "";
+      for (var i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          $("#inputText").val(event.results[i][0].transcript);
+          $("#inputButton").click();
+        } else {
+          interim_transcript += event.results[i][0].transcript;
+        }
+      }
+      $("#inputText").val(interim_transcript);
+    }
+    recognition.start();
+
+    recognition.onend = function () {
+      $("#inputText").val("");
+    }
+  });
 

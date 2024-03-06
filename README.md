@@ -1,6 +1,6 @@
 # GaryGPT
-## A simple Gemini-based general-purpose chatbot
-GaryGPT is a simple chatbot that uses the Gemini Pro 1.0 model to generate responses to user input. It is designed to be easy to use and easy to modify. GaryGPT is written in HTML/JS and uses the non-public Google Gemini API. GaryGPT is a work in progress and is not yet ready for production use. It is intended for educational and experimental purposes only.
+## A simple Claude-based general-purpose chatbot
+GaryGPT is a simple chatbot that uses the Claude Opus model to generate responses to user input. It is designed to be easy to use and easy to modify. GaryGPT is written in HTML/JS and uses the public Claude 3 API. GaryGPT is a work in progress and is not yet ready for production use. It is intended for educational and experimental purposes only.
 ## Installation
 ### Requirements
 - Node.js 20.0.0 or later
@@ -15,9 +15,9 @@ git clone https://github.com/barxilly/GaryGPT.git
 ```bash
 npm i
 ```
-3. Replace YOUR_API_KEY with your Gemini API key encrypted in Base64 in the thtml.js file
+3. Replace YOUR_API_KEY with your Claude API key from [Anthropic](https://www.anthropic.com/api) encrypted in Base64 in the /thtml.js file
 ```javascript
-const API_KEY = atob('API_KEY_HERE');
+const API_KEY = atob('YOUR_API_KEY');
 ```
 4. Run the bot
 ```bash

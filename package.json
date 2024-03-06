@@ -13,7 +13,7 @@
     "electron-winstaller": "^5.2.2",
     "electron-wix-msi": "^5.0.0"
   },
-  "name": "GaryGPT Gemini",
+  "name": "GaryGPT Claude",
   "version": "3.1.1",
   "description": "A minimal Electron application",
   "main": "main.js",
