@@ -10,6 +10,11 @@ function texti() {
   else {
     document.getElementById("response").style.display = "";
   }
+
+  if (document.getElementById("inputText").value == "") {
+    const plc = ["Embrace the wisdom of Gary...", "Ask Gary a question...", "What would Gary say?", "Gary Knows All..."]
+    document.getElementById("inputText").placeholder = plc[Math.floor(Math.random() * plc.length)];
+  }
 }
 
 // Disable the input button and input text
@@ -66,7 +71,7 @@ const anthropic = new Anthropic({
   apiKey: API_KEY,
 });
 
-setInterval(texti, 10);
+setInterval(texti, 10000);
 
 /**
  * Sends chat data to Claude API.
