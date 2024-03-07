@@ -3,14 +3,14 @@ async function run() {
 
   // Step 1: Instantiate the MSICreator
   const msiCreator = new MSICreator({
-    appDirectory: 'C:\\Users\\Ben\\Code\\chatbot\\GaryGPT - Gemini\\release-builds\\GaryGPT Gemini-win32-x64',
-    description: 'A desktop app for GaryGPT Gemini',
-    exe: 'GaryGPT Gemini.exe',
-    name: 'GaryGPT Gemini',
+    appDirectory: 'C:\\Users\\Ben\\Code\\chatbot\\GaryGPT - Claude\\release-builds\\GaryGPT Claude-win32-x64',
+    description: 'A desktop app for GaryGPT Claude',
+    exe: 'GaryGPT Claude.exe',
+    name: 'GaryGPT Claude',
     manufacturer: 'Ben Smith',
     // Get package version from the package.json
     version: process.env.npm_package_version,
-    outputDirectory: 'C:\\Users\\Ben\\Code\\chatbot\\GaryGPT - Gemini\\release-builds\\msi-builds'
+    outputDirectory: 'C:\\Users\\Ben\\Code\\chatbot\\GaryGPT - Claude\\release-builds\\msi-builds'
   });
 
   // Step 2: Create a .wxs template file

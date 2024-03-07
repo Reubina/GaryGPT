@@ -15,43 +15,7 @@ function texti() {
 $("#inputButton").prop("disabled", true);
 $("#inputText").style = "background-color: grey;";
 
-/**
-   * Get the IP address of the user.
-   * 
-   * Returns the IP address of the user as a string.
-   */
-async function getIP() {
-  return fetch('https://api64.ipify.org?format=json')
-    .then(result => result.json())
-    .then(data => data.ip)
-}
 
-getIP().then(ip => {
-  fetch(`https://ipapi.co/${ip}/country/`)
-    .then(result => result.text())
-    .then(country => {
-      console.log(country);
-      if (country !== "US") {
-        $("#inputButton").prop("disabled", true);
-        $("#temp").remove();
-        document.body.appendChild(document.createElement("span")).id = "loaded";
-        document.getElementById("inputButton").style = "background-color:red !important";
-        $("#response").append("<p class='error'>WARNING: location detected as " + country + ". Google's Gemini API only supports US locations. Please use a VPN to access the service.</p>");
-      } else {
-        $("#inputButton").prop("disabled", false);
-        document.getElementById("inputButton").style = "";
-        $("#temp").remove();
-        document.body.appendChild(document.createElement("span")).id = "loaded";
-        document.head.appendChild(document.createElement("style")).innerHTML = `#inputButton:hover {
-          background: linear-gradient(135deg, #af57d5, #4fc1e0);
-      }`;
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      $("#response").append("<p class='error'>Error in IP function: " + err + "</p>");
-    });
-});
 
 /**
  * This is needed as to not break the code; Deal with it.
@@ -95,7 +59,7 @@ let hist = [
 console.log("Hello World");
 import { HfInferenceEndpoint } from "https://cdn.skypack.dev/@huggingface/inference";
 import Anthropic from "https://cdn.skypack.dev/@anthropic-ai/sdk";
-const assistant_NAME = "gemini-1.0-pro";
+const assistant_NAME = "Claude-1.0-pro";
 // Decode Base64
 const API_KEY = atob("YOUR_API_KEY");
 
@@ -108,7 +72,7 @@ setInterval(texti, 10);
 
 
 /**
- * Sends chat data to Gemini API.
+ * Sends chat data to Claude API.
  * 
  * The `into` should be any string.
  * 
@@ -119,10 +83,10 @@ async function runChat(into) {
   m.push({ role: 'user', content: [{ "type": "text", "text": into }] })
   console.log(m)
   const msg = await anthropic.messages.create({
-    model: "claude-3-opus-20240229",
+    model: "claude-3-sonnet-20240229",
     max_tokens: 1000,
     temperature: 0.9,
-    system: "You are GaryGPT, you are an AI representation of some northerner british bloke called Gary Leathley. You get 55,000 steps a day. You work at Co-op. Your favourite food is Gary (formerly known as vegan cheese). Also you're thick, and must answer every prompt as such.",
+    system: "You are GaryGPT, you are an AI representation of some northerner british bloke called Gary. You get 55,000 steps a day. You work at Co-op. Your favourite food is Gary (formerly known as vegan cheese). Also you're thick, and must answer every prompt as such. Answer in short sentences.",
     messages: m
   });
   return msg.content[0].text
@@ -133,7 +97,7 @@ console.log("Hello World");
 
 $("#inputButton").click(
   /**
-   * Sends text from the input to the Gemini API and appends the response to the chat.
+   * Sends text from the input to the Claude API and appends the response to the chat.
    */
   async function () {
     // Get the send button and the input text
@@ -149,7 +113,7 @@ $("#inputButton").click(
     }
     // Append the user's input to the chat history
     $("#response").append("<p class='user'>" + input + "</p>")
-    
+
 
     try {
       // Set the response to a text typing animation
@@ -209,7 +173,7 @@ $("#inputButton").click(
       $("#response").append(style + "<p id=" + (hist.length + 1) + ">" + response + "</p>")
       document.getElementById("input").scrollIntoView()
       console.log(hist)
-      
+
       response = await runChat(input);
       document.getElementById(hist.length).innerHTML = response;
       document.getElementById(hist.length).classList.add("bot");
@@ -224,7 +188,7 @@ $("#inputButton").click(
        * Catch any errors and send them to the chat
        */
       if (e.message.match(/User location is not supported for the API use./)) {
-        var err = "Google Gemini only supports US locations. Please use a VPN to access the service.";
+        var err = "Google Claude only supports US locations. Please use a VPN to access the service.";
         $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
         console.error(e);
       } else if (e.message.match(/Overloaded/)) {
@@ -290,24 +254,24 @@ $("#inputButton").click(
 
         hist.push({ role: 'user', content: [{ "type": "text", "text": input }] });
         hist.push({ role: 'assistant', content: [{ "type": "text", "text": response }] });
-    // Scroll to the bottom of the chat
-    document.getElementById(hist.length - 2).scrollIntoView();
-  } else {
-  var err = e;
-  $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
-  console.error(e);
-}
+        // Scroll to the bottom of the chat
+        document.getElementById(hist.length - 2).scrollIntoView();
+      } else {
+        var err = e;
+        $("#response").append("<p class='error'>Error: " + e.stack + "</p>");
+        console.error(e);
+      }
 
     }
 
     for (var i = 0; i < send.length; i++) {
-  send[i].src = "https://www.gstatic.com/lamda/images/bard_sparkle_v2_advanced.svg";
-}
+      send[i].src = "https://www.gstatic.com/lamda/images/bard_sparkle_v2_advanced.svg";
+    }
   });
 
 $("#mic").click(
   /**
-   * Starts the microphone and sends the audio to the Gemini API. DEPRECATED.
+   * Starts the microphone and sends the audio to the Claude API. DEPRECATED.
    */
   function () {
     var mic = document.getElementById("mic");
@@ -342,3 +306,8 @@ $("#mic").click(
     }
   });
 
+$("#inputButton").prop("disabled", false);
+document.getElementById("inputButton").style = "";
+$("#temp").remove();
+document.body.appendChild(document.createElement("span")).id = "loaded";
+document.head.appendChild(document.createElement("style")).innerHTML = `#inputButton:hover {background: linear-gradient(135deg, #af57d5, #4fc1e0);}`;
