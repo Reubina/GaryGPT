@@ -38,7 +38,7 @@ npm run dev
     - On macOS, click the three dots in the top right corner of the browser window and select "Install GaryGPT".
     - On Android, click the three dots in the top right corner of the Chrome app and select "Add to Home Screen".
     - On iOS, click the share button in the bottom center of the Safari app and select "Add to Home Screen".
-### Exporting to Android
+### Exporting to Android App (Currently broken due to CORS)
 GaryGPT can be exported to Android using the [Capacitor](https://capacitorjs.com/) framework which is pre-installed. To export GaryGPT to Android, follow these steps:
 1. Add the Android platform
 ```bash
@@ -54,7 +54,7 @@ npx cap open android
 ```
 4. Build and run the Android app
 
-### Exporting to iOS
+### Exporting to iOS App (Currently broken due to CORS)
 ##### Note: Exporting to iOS requires a Mac with Xcode installed as well as an Apple Developer account.
 GaryGPT can be exported to iOS using the same [Capacitor](https://capacitorjs.com/) framework which is pre-installed. To export GaryGPT to iOS, follow these steps:
 1. Add the iOS platform
