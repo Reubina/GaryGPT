@@ -3,10 +3,10 @@ async function run() {
 
   // Step 1: Instantiate the MSICreator
   const msiCreator = new MSICreator({
-    appDirectory: 'C:\\Users\\Ben\\Code\\chatbot\\GaryGPT - Claude\\release-builds\\GaryGPT Claude-win32-x64',
-    description: 'A desktop app for GaryGPT Claude',
-    exe: 'GaryGPT Claude.exe',
-    name: 'GaryGPT Claude',
+    appDirectory: 'C:\\Users\\Ben\\Code\\chatbot\\GaryGPT - Claude\\release-builds\\@garygpt-claude-win32-x64',
+    description: 'A desktop app for @garygpt-claude',
+    exe: '@garygpt-claude.exe',
+    name: '@garygpt-claude',
     manufacturer: 'Ben Smith',
     // Get package version from the package.json
     version: process.env.npm_package_version,

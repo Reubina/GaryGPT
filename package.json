@@ -10,7 +10,7 @@
   "devDependencies": {
     "electron": "^28.1.4",
     "electron-packager": "^17.1.2",
-    "electron-winstaller": "^5.2.2",
+    "electron-winstaller": "^5.2.2", 
     "electron-wix-msi": "^5.0.0"
   },
   "name": "@garygpt/claude",

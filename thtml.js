@@ -11,7 +11,9 @@ function texti() {
     document.getElementById("response").style.display = "";
   }
 
-  if (document.getElementById("inputText").value == "") {
+  var rand = Math.floor(Math.random() * 400);
+
+  if (document.getElementById("inputText").value == "" && rand == 54) {
     const plc = ["Embrace the wisdom of Gary...", "Ask Gary a question...", "What would Gary say?", "Gary Knows All..."]
     document.getElementById("inputText").placeholder = plc[Math.floor(Math.random() * plc.length)];
   }
@@ -66,12 +68,12 @@ let hist = [
 // Import Claude from Anthropic API
 import Anthropic from "https://cdn.skypack.dev/@anthropic-ai/sdk";
 // API Key encoded in Base64
-const API_KEY = atob("YOUR_API_KEY");
+const API_KEY = atob("API_KEY");
 const anthropic = new Anthropic({
   apiKey: API_KEY,
 });
 
-setInterval(texti, 10000);
+setInterval(texti, 10);
 
 /**
  * Sends chat data to Claude API.
@@ -110,8 +112,9 @@ $("#inputButton").click(
     for (var i = 0; i < send.length; i++) {
       send[i].src = "https://www.gstatic.com/lamda/images/bard_sparkle_processing_v2_advanced.gif";
     }
+    var rand = Math.floor(Math.random() * 4000000);
     // Append the user's input to the chat history
-    $("#response").append("<p class='user'>" + input + "</p>")
+    $("#response").append("<p class='user' id='" + rand + "'>" + input + "</p>")
 
 
     try {
@@ -172,6 +175,7 @@ $("#inputButton").click(
       $("#response").append(style + "<p id=" + (hist.length + 1) + ">" + response + "</p>")
       document.getElementById("input").scrollIntoView()
       console.log(hist)
+      document.getElementById(hist.length + 1).scrollIntoView();
 
       response = await runChat(input);
       document.getElementById(hist.length).innerHTML = response;
